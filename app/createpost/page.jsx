@@ -17,7 +17,6 @@ const App = () => {
   const [file, setFile] = useState(null);
 
   const eventSubmit = async () => {
-    // Perform validation
     if (!eventName || !eventDate || !eventPlace || !eventPrice || !file) {
       alert("Please fill in all the fields.");
       return;
@@ -31,7 +30,6 @@ const App = () => {
       const imageUrl = await getDownloadURL(imageRef);
       console.log(imageUrl)
 
-      // Create the event object
       const eventObject = {
         name: eventName,
         date: eventDate,
