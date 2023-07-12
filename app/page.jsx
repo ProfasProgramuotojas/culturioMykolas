@@ -9,9 +9,13 @@ const Home = () => {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
+    const loggedIn = sessionStorage.getItem("Username");
+    if (!loggedIn) {
+      router.push("/login");
+    }
     const fetchData = async () => {
       try {
-        const response = await axios.get('/api');
+        const response = await axios.get("/api");
         setEvents(response.data.data);
       } catch (error) {
         console.error(error);
@@ -33,6 +37,14 @@ const Home = () => {
       >
         Add Event
       </button>
+      <button
+        className="bg-blue-500 text-white font-semibold py-2 px-4 rounded"
+        onClick={() => {
+          router.push("/yourevents");
+        }}
+      >
+        Your Events
+      </button>
       {events.map((event) => (
         <div
           key={event.id}
@@ -42,7 +54,7 @@ const Home = () => {
           <p className="text-sm">Date: {event.eventDate}</p>
           <p className="text-sm">Location: {event.eventLocation}</p>
           <p className="text-sm">Price: {event.eventPrice}</p>
-          <img src={event.eventImage} alt="Event" className="mt-4" />
+          <img src={event.eventImage} alt={event.eventName} className="w-40 h-40 mt-4 object-cover" />
         </div>
       ))}
     </div>

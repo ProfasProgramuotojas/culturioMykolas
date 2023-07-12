@@ -3,9 +3,9 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import { storage } from "../api/firebase";
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { v4 } from "uuid";
+// import { storage } from "../api/firebase";
+// import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+// import { v4 } from "uuid";
 
 const App = () => {
   const router = useRouter();
@@ -23,19 +23,20 @@ const App = () => {
     }
 
     try {
-      const imageName = file.name + v4();
-      const imageRef = ref(storage, `images/${imageName}`);
-      await uploadBytes(imageRef, file);
+      // const imageName = file.name + v4();
+      // const imageRef = ref(storage, `images/${imageName}`);
+      // await uploadBytes(imageRef, file);
 
-      const imageUrl = await getDownloadURL(imageRef);
-      console.log(imageUrl)
+      // const imageUrl = await getDownloadURL(imageRef);
+      // console.log(imageUrl)
 
       const eventObject = {
         name: eventName,
         date: eventDate,
         place: eventPlace,
         price: eventPrice,
-        file: imageUrl,
+        file: '', //cia turi buti "imageUrl", bet kadangi as susikau savo firebase imeciau nieka :Dd
+        userId: sessionStorage.getItem("UserId")
       };
       
       const response = await axios.post("/api/addtodb", eventObject);

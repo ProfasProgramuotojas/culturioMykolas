@@ -2,24 +2,16 @@ import db from "../db";
 import { NextResponse } from "next/server";
 
 export async function POST(request) {
-  const event = await request.json();
+  const id = await request.json();
   try {
     const connection = await db.getConnection();
 
     try {
-      const query =
-        "INSERT INTO events (eventName, eventDate, eventLocation, eventPrice, eventImage, userId) VALUES (?, ?, ?, ?, ?, ?)";
-      const params = [
-        event.name,
-        event.date,
-        event.place,
-        event.price,
-        event.file,
-        event.userId
-      ];
+      const query = "DELETE FROM events WHERE id = ?";
+      const params = [id.id];
       await connection.query(query, params);
 
-      return NextResponse.json({ success: true });
+      return NextResponse.json({ data: "success" });
     } finally {
       connection.release();
     }
